@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import { CoffeeCardProps } from "./molecules/CoffeeCard";
-import Menu from "./organism/Menu";
+import Menu from "./review/organism/Menu";
+import { CoffeeProps } from "./review/molecules/Coffee";
 
 type CoffeeAPI = {
+  image: string;
   title: string;
   description: string;
   ingredients: string[];
-  image: string;
   id: number;
 };
 
 function App() {
-  const [data, setData] = useState<CoffeeCardProps[]>([]);
+  const [data, setData] = useState<CoffeeProps[]>([]);
 
   const getData = async () => {
-    const resp = await fetch("https://api.sampleapis.com/coffee/hot");
+    const resp = await fetch("https://api.sampleapis.com/coffee/iced");
     const json = await resp.json();
     const data1 = json.map((v: CoffeeAPI) => ({
       imgSrc: v.image,
@@ -22,7 +22,6 @@ function App() {
       description: v.description,
       badges: v.ingredients.map((ingredient) => ({
         text: ingredient,
-        color: "green",
       })),
     }));
     setData(data1);
